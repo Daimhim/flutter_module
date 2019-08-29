@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_module/CustomizeWidget.dart';
 
 class CreateHomePage extends StatelessWidget{
 
@@ -17,7 +18,7 @@ class HomePageStateless extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new HomePage();
+    return new HomePageState();
   }
 
 
@@ -42,12 +43,12 @@ class HomePage extends State<HomePageState>{
     );
   }
   Widget buildBody(){
-    return null;
+    return new Text("I am Body");
   }
   Widget buildAppBar(){
-    return new Container(
-      child: new Center(
-        child: new Text("Home"),
+    return new TitleWidget("Home",
+      background: new BoxDecoration(
+        color: Colors.blue
       ),
     );
   }
