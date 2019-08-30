@@ -1,10 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/HomePage.dart';
 import 'package:flutter_module/ListPage.dart';
 import 'package:flutter_module/MessagePage.dart';
 
-void main() => runApp(new CreateAppHome());
+void main() {
+  runApp(new CreateAppHome())
+  if (Platform.isAndroid) {
+    // 以下两行 设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，覆盖状态栏，写在渲染之前MaterialApp组件会覆盖掉这个值。
+    SystemUiOverlayStyle systemUiOverlayStyle =
+    SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
+}
 
 class CreateAppHome extends StatelessWidget {
   @override
@@ -23,8 +34,10 @@ class AppHome extends StatefulWidget {
     return new CustomizeAppHomeState();
   }
 }
-/**
- * 自定义实现首页
+
+
+/*
+ 自定义实现首页
  */
 class CustomizeAppHomeState extends State<AppHome> {
   int _index = 0;
@@ -34,7 +47,8 @@ class CustomizeAppHomeState extends State<AppHome> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _list..add(new CreateHomePage())..add(new ListPage())..add(new MessagePage());
+    _list..add(new CreateHomePage())..add(new ListPage())..add(
+        new MessagePage());
   }
 
   @override
@@ -51,9 +65,7 @@ class CustomizeAppHomeState extends State<AppHome> {
   }
 
 
-
   Widget getTabItem(int index, String text, IconData icon) {
-
     return new GestureDetector(
       onTap: () {
         setState(() {
@@ -62,7 +74,8 @@ class CustomizeAppHomeState extends State<AppHome> {
       },
       child: new Container(
         padding: EdgeInsets.only(top: 5, bottom: 5),
-        decoration: new BoxDecoration(color: index == 1 ? Colors.black87:Colors.black26),
+        decoration: new BoxDecoration(
+            color: index == 1 ? Colors.black87 : Colors.black26),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -85,7 +98,7 @@ class CustomizeAppHomeState extends State<AppHome> {
 //      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
-          child: getTabItem(0, 'Home2', Icons.home),
+          child: getTabItem(0, 'Home', Icons.home),
           flex: 1,
         ),
         Expanded(
@@ -101,8 +114,8 @@ class CustomizeAppHomeState extends State<AppHome> {
   }
 }
 
-/**
- * BottomNavigationBar 实现首页
+/*
+ BottomNavigationBar 实现首页
  */
 class BNBarAppHomeState extends State<AppHome> {
   int _currentIndex = 0;
@@ -134,8 +147,8 @@ class BNBarAppHomeState extends State<AppHome> {
   }
 }
 
-/**
- * TabBar 实现首页
+/*
+ TabBar 实现首页
  */
 class TabBarAppHomeState extends State<AppHome>
     with SingleTickerProviderStateMixin {
